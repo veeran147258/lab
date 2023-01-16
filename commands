@@ -1,0 +1,43 @@
+>describe keyspace;
+> select*from system_schema.keyspaces;
+>create keyspace college
+   ... with replication={'class':'SimpleStrategy','replication_factor':1};
+>cqlsh> use college;
+
+> CREATE TABLE students(student_id int PRIMARY KEY,
+           ... student_name text,
+           ... student_city text,
+           ... );
+>select*from students; 
+>INSERT INTO students(student_id,student_name,student_city)VALUES(30,'hema','bangalore');
+> INSERT INTO students(student_id,student_name,student_city)VALUES(34,'uday','bangalore');
+> INSERT INTO students(student_id,student_name,student_city)VALUES(29,'tej','mysore');
+> select*from students; 
+  read 
+SELECT student_id FROM students; 
+update
+UPDATE students SET student_name ='latha' where student_id =30; 
+delete
+DELETE FROM students where student_id=30; 
+batch 
+BEGIN BATCH
+           ... INSERT INTO students(student_id,student_name,student_city)VALUES(30,'hema','bangalore');
+           ... UPDATE students SET student_city='chittor' where student_id=34;
+           ... DELETE FROM students where student_id=34;
+           ... APPLY BATCH
+           ... ; 
+alter 
+ALTER TABLE students
+           ... ADD student_email text; 
+ALTER TABLE students
+           ... DROP student_email; 
+
+TRUNCATE TABLE 
+ TRUNCATE students;
+
+indexing
+CREATE INDEX name ON students(student_name);  
+
+drop 
+DROP TABLE students;
+
